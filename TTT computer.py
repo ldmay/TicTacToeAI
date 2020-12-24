@@ -198,22 +198,90 @@ def comp_update(game):
                     location_score[x] += 50
 
         #current field is in the middle 
-        if (x == 1 or x == 4 or x == 7):
+        elif (x == 1 or x == 4 or x == 7):
             if (location[x + 1] == location[x - 1]):
                 if location[x + 1] == char:
-                    location_score[x] += 120
+                    location_score[x] += 100
                 elif location[x + 1] == player_char: 
-                    location_score[x] += 80
+                    location_score[x] += 50
 
         #current field is on the right 
-        if (x == 2 or x == 5 or x == 8):
+        elif (x == 2 or x == 5 or x == 8):
             if (location[x - 1] == location[x - 2]):
                 if location[x - 1] == char:
-                    location_score[x] += 120
+                    location_score[x] += 100
                 elif location[x - 1] == player_char: 
-                    location_score[x] += 80
+                    location_score[x] += 50
+
 
         #checking whether there are two of the same tokens in a column
+        #current field in the top row
+        if x < 3:
+            if (location[x + 3] == location[x + 6]):
+                if location[x + 3] == char:
+                    location_score[x] += 100
+                elif location[x + 3] == player_char: 
+                    location_score[x] += 50
+
+        #current field in middle row 
+        elif x < 6:
+            if (location[x + 3] == location[x - 3]):
+                if location[x + 3] == char:
+                    location_score[x] += 100
+                elif location[x + 3] == player_char: 
+                    location_score[x] += 50
+
+        #current field in bottom row
+        elif x < 9:
+            if (location[x - 3] == location[x - 6]):
+                if location[x - 3] == char:
+                    location_score[x] += 100
+                elif location[x - 3] == player_char: 
+                    location_score[x] += 50
+
+
+        #checking whether there are two of the same tokens in a diagonal
+        #checking diagonal
+        if x == 0:
+            if(location[x + 4] == location[x + 8]):
+                if location[x + 4] == char:
+                    location_score[x] += 100
+                elif location[x + 4] == player_char: 
+                    location_score[x] += 50
+
+        elif x == 2:
+            if(location[x + 2] == location[x + 4]):
+                if location[x + 4] == char:
+                    location_score[x] += 100
+                elif location[x + 4] == player_char: 
+                    location_score[x] += 50
+         
+        elif x == 4:
+            if(location[x + 4] == location[x - 4]):
+                if location[x + 4] == char:
+                    location_score[x] += 100
+                elif location[x + 4] == player_char: 
+                    location_score[x] += 50
+
+            if(location[x + 2] == location[x - 2]):
+                if location[x + 2] == char:
+                    location_score[x] += 100
+                elif location[x + 2] == player_char: 
+                    location_score[x] += 50
+
+        elif x == 6:
+            if(location[x - 2] == location[x - 4]):
+                if location[x - 4] == char:
+                    location_score[x] += 100
+                elif location[x - 4] == player_char: 
+                    location_score[x] += 50
+
+        elif x == 8:
+            if(location[x - 4] == location[x - 8]):
+                if location[x - 4] == char:
+                    location_score[x] += 100
+                elif location[x - 4] == player_char: 
+                    location_score[x] += 50
 
 
     #Determining which field has the highest score and placing the computer's token here
@@ -244,23 +312,6 @@ def comp_update(game):
 
     line[column] = char   
     game.Lines[row] = "".join(line)
-
-    #line1 = game.Lines[0]
-    #line2 = game.Lines[2]
-    #line3 = game.Lines[4]
-   
-
-    ##checking vertical
-    #for j in range(0, 4, 2):
-    #    if line1[j] != " " and line1[j] == line2[j] == line3[j]:
-    #        print("Player " + line1[j] + " has won.")
-    #        return True
-
-    ##checking diagonal
-    #if line2[2] != " " and (line1[0] == line2[2] == line3[4] or line1[4] == line2[2] == line3[j]):
-    #    print("Player " + line2[2] + " has won.")
-    #    return True
-
 
 
     #print the board
