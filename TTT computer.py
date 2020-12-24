@@ -29,20 +29,32 @@ def run():
 
     game = Board()
     win = False
-    player = False
     mode = settings()
+    player = random.randint(0,1)
 
     #PvP game
     while not win and not mode:
 
-        player = update(game, player)
+        if player == True:
+            update(game, player)
+            update(game, not player)
+
+        else:
+            update(game, not player)
+            update(game, player)
+
         win = check_win(game)
 
     #Computer game
     while not win and mode:
 
-        player = not update(game, player)
-        comp_update(game)
+        if player == True: 
+            update(game, player)
+            comp_update(game, not player)
+        else: 
+            comp_update(game, not player)
+            update(game, player)
+
         win = check_win(game)
 
 
@@ -93,12 +105,12 @@ def check_win(game):
 
 
 #Creating the update function, which updates the board 
-def update(game, Player):
+def update(game, turn):
     #keep a counter which changes every turn to represent the other player
 
     move = 0
 
-    if Player == False:
+    if turn == True:
         char = "X"
     else:
         char = "O"
@@ -108,8 +120,8 @@ def update(game, Player):
     
     if move < 1 or move > 9:
         print("Illegal move. Please enter a valid integer. \n")
-        Player = update(game, Player) #if move is illegal, simply call the function again
-        return Player #returning Player since calling update has already returned !Player
+        turn = update(game, turn) #if move is illegal, simply call the function again
+        return turn #returning Player since calling update has already returned !Player
 
     else:
 
@@ -132,8 +144,8 @@ def update(game, Player):
 
         if line[column] == "X" or line[column] == "O":
             print("Illegal move. Please enter a valid integer. \n")
-            Player = update(game, Player) #if move is illegal, simply call the function again
-            return Player #returning Player since calling update has already returned !Player
+            turn = update(game, turn) #if move is illegal, simply call the function again
+            return turn #returning Player since calling update has already returned !Player
 
         else:  
             line[column] = char   
@@ -146,19 +158,19 @@ def update(game, Player):
             print(game.Lines[3])
             print(game.Lines[4] + "\n")
 
-            #changes the player 
-            return not Player
-
 
 #updates the board on the computer's move 
-def comp_update(game):
+def comp_update(game, turn):
     #ai will go second 
     #Ideal move is to place token in corner if player puts it in the middle, or vice versa
     #ai works by ranking each possible field it can drop a token on
     
-
-    char = "O"
-    player_char = "X"
+    if turn == True:
+        char = "X"
+        player_char = "O"
+    else:
+        char = "O"
+        player_char = "X"
 
     print("Computer's turn.")
 
@@ -320,6 +332,7 @@ def comp_update(game):
     print(game.Lines[2])
     print(game.Lines[3])
     print(game.Lines[4] + "\n")
+
 
 
 run()
